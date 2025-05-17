@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab17\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D0633817-D561-421B-8B4C-8EAC98B7674D}|Lab17\\Lab17.vcxproj|C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab17\\Lab17\\Lab17.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D0633817-D561-421B-8B4C-8EAC98B7674D}|Lab17\\Lab17.vcxproj|solutionrelative:Lab17\\Lab17.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Lab17.cpp",
+              "DocumentMoniker": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab17\\Lab17\\Lab17.cpp",
+              "RelativeDocumentMoniker": "Lab17\\Lab17.cpp",
+              "ToolTip": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab17\\Lab17\\Lab17.cpp",
+              "RelativeToolTip": "Lab17\\Lab17.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-15T05:52:27.512Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

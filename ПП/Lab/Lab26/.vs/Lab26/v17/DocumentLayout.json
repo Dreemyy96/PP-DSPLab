@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab26\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AFF2A729-6DD9-47AC-8093-7D581C71B3BB}|Lab26\\Lab26.vcxproj|C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab26\\Lab26\\Lab26.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AFF2A729-6DD9-47AC-8093-7D581C71B3BB}|Lab26\\Lab26.vcxproj|solutionrelative:Lab26\\Lab26.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Lab26.cpp",
+              "DocumentMoniker": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab26\\Lab26\\Lab26.cpp",
+              "RelativeDocumentMoniker": "Lab26\\Lab26.cpp",
+              "ToolTip": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab26\\Lab26\\Lab26.cpp",
+              "RelativeToolTip": "Lab26\\Lab26.cpp",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-15T06:54:19.705Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

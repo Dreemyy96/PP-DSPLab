@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab30\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FC2D98AD-DB63-46ED-BC6A-E9FDDAE94C79}|Lab30\\Lab30.vcxproj|C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab30\\Lab30\\Lab30.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{FC2D98AD-DB63-46ED-BC6A-E9FDDAE94C79}|Lab30\\Lab30.vcxproj|solutionrelative:Lab30\\Lab30.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Lab30.cpp",
+              "DocumentMoniker": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab30\\Lab30\\Lab30.cpp",
+              "RelativeDocumentMoniker": "Lab30\\Lab30.cpp",
+              "ToolTip": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab30\\Lab30\\Lab30.cpp",
+              "RelativeToolTip": "Lab30\\Lab30.cpp",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-17T07:53:27.257Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

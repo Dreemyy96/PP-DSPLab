@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab23\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FB8D7707-47A0-45E6-B4BD-BBEBB4B266EB}|Lab23.2\\Lab23.2.vcxproj|C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab23\\Lab23.2\\Lab23.2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{FB8D7707-47A0-45E6-B4BD-BBEBB4B266EB}|Lab23.2\\Lab23.2.vcxproj|solutionrelative:Lab23.2\\Lab23.2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D04EC34F-87AF-46DE-8D4C-589CECA8291E}|Lab23\\Lab23.vcxproj|C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab23\\Lab23\\Lab23.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{D04EC34F-87AF-46DE-8D4C-589CECA8291E}|Lab23\\Lab23.vcxproj|solutionrelative:Lab23\\Lab23.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Lab23.2.cpp",
+              "DocumentMoniker": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab23\\Lab23.2\\Lab23.2.cpp",
+              "RelativeDocumentMoniker": "Lab23.2\\Lab23.2.cpp",
+              "ToolTip": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab23\\Lab23.2\\Lab23.2.cpp",
+              "RelativeToolTip": "Lab23.2\\Lab23.2.cpp",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAEEAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-15T06:28:38.194Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Lab23.cpp",
+              "DocumentMoniker": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab23\\Lab23\\Lab23.cpp",
+              "RelativeDocumentMoniker": "Lab23\\Lab23.cpp",
+              "ToolTip": "C:\\Users\\koval\\Desktop\\\u041F\u041F \u0438 \u0426\u041E\u0421\\\u041F\u041F\\Lab\\Lab23\\Lab23\\Lab23.cpp",
+              "RelativeToolTip": "Lab23\\Lab23.cpp",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAABkAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-15T06:25:06.646Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,3 +1,5 @@
 ﻿  SecondTask.cpp
+C:\Users\koval\Desktop\ПП и ЦОС\ЦОС\Lab\SecondTask\SecondTask\SecondTask.cpp(51,11): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\koval\Desktop\ПП и ЦОС\ЦОС\Lab\SecondTask\SecondTask\SecondTask.cpp(101,11): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
   SecondTask.vcxproj -> C:\Users\koval\Desktop\ПП и ЦОС\ЦОС\Lab\SecondTask\x64\Debug\SecondTask.exe
   ╤ъюяшЁютрэю Їрщыют: 0.

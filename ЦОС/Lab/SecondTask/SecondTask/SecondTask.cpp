@@ -1,141 +1,141 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <vector>
-#include <string>
-#include <sstream>
+#include <complex>
 #include <cmath>
 #include <fftw3.h>
+#include <string>
+#include <sstream>
+#include <iomanip>
 
 using namespace std;
 
-bool readCSV(const string& filename, vector<double>& time, vector<double>& analog, vector<int>& digital) {
+struct SignalPoint {
+    double time;
+    double analog;
+    int digital;
+};
+
+vector<SignalPoint> readCSV(const string& filename) {
+    vector<SignalPoint> data;
     ifstream file(filename);
-    if (!file.is_open()) {
-        cerr << "Couldn't open file " << filename << endl;
-        return false;
-    }
-
     string line;
-    getline(file, line); 
-
+    getline(file, line);
     while (getline(file, line)) {
         stringstream ss(line);
-        double t, a;
-        int d;
-        char comma;
-
-        if (ss >> t >> comma >> a >> comma >> d) {
-            time.push_back(t);
-            analog.push_back(a);
-            digital.push_back(d);
-        }
+        string timeStr, analogStr, digitalStr;
+        getline(ss, timeStr, ',');
+        getline(ss, analogStr, ',');
+        getline(ss, digitalStr, ',');
+        SignalPoint point;
+        point.time = stod(timeStr);
+        point.analog = stod(analogStr);
+        point.digital = stoi(digitalStr);
+        data.push_back(point);
     }
-
-    file.close();
-    return true;
+    return data;
 }
 
-vector<double> normalizeDigital(const vector<int>& digital, int numLevels, double imax) {
-    vector<double> result(digital.size());
-    double step = (2.0 * imax) / numLevels;
-
-    for (size_t i = 0; i < digital.size(); ++i) {
-        result[i] = digital[i] * step - imax + step / 2.0;
+vector<double> dequantizeSignal(const vector<int>& digital, double imax, int numLevels) {
+    vector<double> dequantize;
+    dequantize.reserve(digital.size());
+    double step = (2 * imax) / numLevels; 
+    for (int q : digital) {
+        double value = q * step - imax + step / 2.0;
+        dequantize.push_back(value);
     }
-
-    return result;
+    return dequantize;
 }
 
-double averageRelativeError(const vector<double>& original, const vector<double>& restored) {
-    if (original.size() != restored.size() || original.empty()) return -1.0;
-
-    double errorSum = 0.0;
-    int count = 0;
-    const double threshold = 1e-2; // порог амплитуды
-
-    for (size_t i = 0; i < original.size(); ++i) {
-        if (fabs(original[i]) > threshold) {
-            errorSum += fabs((restored[i] - original[i]) / original[i]);
-            ++count;
-        }
-    }
-
-    return (count > 0) ? (errorSum / count) * 100.0 : -1.0;
-}
-
-
-void exportCSV(const string& filename, const vector<double>& time, const vector<double>& analog, const vector<double>& restored) {
-    ofstream file(filename);
-    if (!file.is_open()) {
-        cerr << "Couldn't open file for writing: " << filename << endl;
-        return;
-    }
-
-    file << "time,analog,restored\n";
-    for (size_t i = 0; i < time.size(); ++i) {
-        file << time[i] << "," << analog[i] << "," << restored[i] << "\n";
-    }
-
-    file.close();
-    cout << "Restored signal exported to " << filename << endl;
-}
-
-int main() {
-    const string inputFilename = "output.csv";
-    const string outputFilename = "restored.csv";
-    const int numLevels = 16;
-    const double imax = 16.0;
-
-    vector<double> time;
-    vector<double> analog;
-    vector<int> digital;
-
-    if (!readCSV(inputFilename, time, analog, digital)) {
-        return 1;
-    }
-
-    if (analog.size() != digital.size() || analog.empty()) {
-        cerr << "Data size mismatch or empty data" << endl;
-        return 1;
-    }
-
-    vector<double> digitalNormalized = normalizeDigital(digital, numLevels, imax);
-    size_t N = digitalNormalized.size();
-
+void computeFFT(const vector<double>& signal, vector<double>& spectrum) {
+    int N = signal.size();
     fftw_complex* in = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * N);
     fftw_complex* out = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * N);
 
-    for (size_t i = 0; i < N; ++i) {
-        in[i][0] = digitalNormalized[i];
+    for (int i = 0; i < N; ++i) {
+        in[i][0] = signal[i];
         in[i][1] = 0.0;
     }
 
-    fftw_plan plan_forward = fftw_plan_dft_1d((int)N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
-    fftw_execute(plan_forward);
+    fftw_plan p = fftw_plan_dft_1d(N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+    fftw_execute(p);
 
-    fftw_plan plan_backward = fftw_plan_dft_1d((int)N, out, in, FFTW_BACKWARD, FFTW_ESTIMATE);
-    fftw_execute(plan_backward);
-
-    vector<double> restoredSignal(N);
-    for (size_t i = 0; i < N; ++i) {
-        restoredSignal[i] = in[i][0] / N;
+    spectrum.resize(N);
+    for (int i = 0; i < N; ++i) {
+        spectrum[i] = sqrt(out[i][0] * out[i][0] + out[i][1] * out[i][1]);
     }
 
-    double avgRelError = averageRelativeError(analog, restoredSignal);
-    cout << "Average relative error: " << avgRelError << " %" << endl;
-    if (avgRelError <= 5.0) {
-        cout << "? Error is within threshold!" << endl;
-    }
-    else {
-        cout << "? Error exceeds threshold!" << endl;
-    }
-
-    exportCSV(outputFilename, time, analog, restoredSignal);
-
-    fftw_destroy_plan(plan_forward);
-    fftw_destroy_plan(plan_backward);
+    fftw_destroy_plan(p);
     fftw_free(in);
     fftw_free(out);
+}
+
+double computeError(const vector<double>& analogSpectrum, const vector<double>& quantizedSpectrum) {
+    double sumError = 0.0;
+    const double epsilon = 1e-10;
+    size_t count = analogSpectrum.size();
+
+    for (size_t k = 0; k < count; ++k) {
+        double errorPercent = fabs(analogSpectrum[k] - quantizedSpectrum[k]) /
+            (fabs(analogSpectrum[k]) + epsilon) * 100.0;
+        sumError += errorPercent;
+    }
+
+    return sumError / count;
+}
+
+double computeIMax(const vector<double>& analogSpectrum) {
+    double maxAmp = 0.0;
+    for (double val : analogSpectrum) {
+        if (abs(val) > maxAmp) {
+            maxAmp = abs(val);
+        }
+    }
+
+    return ceil(maxAmp * 1.1);
+}
+
+void saveSpectrumToCSV(const string& filename, const vector<double>& analogSpec, const vector<double>& digitalSpec) {
+    ofstream out(filename);
+    out << "index,analog,digital\n";
+    int N = min(analogSpec.size(), digitalSpec.size());
+    for (int i = 0; i < N; ++i) {
+        out << i << "," << analogSpec[i] << "," << digitalSpec[i] << "\n";
+    }
+}
+
+int main() {
+    string filename = "output.csv";
+    int numLevels = 16;
+
+    vector<SignalPoint> data = readCSV(filename);
+
+    vector<double> analog;
+    vector<int> quantizeSignal;
+    for (const auto& point : data) analog.push_back(point.analog);
+    for (const auto& point : data) quantizeSignal.push_back(point.digital);
+
+    double imax = computeIMax(analog);
+
+    vector<double> restored = dequantizeSignal(quantizeSignal, imax, numLevels);
+
+    vector<double> analogSpectrum, restoredSpectrum;
+    computeFFT(analog, analogSpectrum);
+    computeFFT(restored, restoredSpectrum);
+
+    double errorPercent = computeError(analogSpectrum, restoredSpectrum);
+
+    cout << fixed << setprecision(2);
+    cout << "Погрешность между спектрами: " << errorPercent << "%" << endl;
+
+    if (errorPercent > 5.0) {
+        cout << "Погрешность превышает допустимые 5%!" << endl;
+    }
+    else {
+        cout << "Погрешность в допустимых пределах." << endl;
+    }
+
+    saveSpectrumToCSV("fft_results.csv", analogSpectrum, restoredSpectrum);
 
     return 0;
 }

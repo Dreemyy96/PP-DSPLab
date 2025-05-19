@@ -41,7 +41,7 @@ vector<double> dequantizeSignal(const vector<int>& digital, double imax, int num
     dequantize.reserve(digital.size());
     double step = (2 * imax) / numLevels; 
     for (int q : digital) {
-        double value = q * step - imax + step / 2.0;
+        double value = (q + 0.5) * step - imax;
         dequantize.push_back(value);
     }
     return dequantize;
@@ -62,7 +62,7 @@ void computeFFT(const vector<double>& signal, vector<double>& spectrum) {
 
     spectrum.resize(N);
     for (int i = 0; i < N; ++i) {
-        spectrum[i] = sqrt(out[i][0] * out[i][0] + out[i][1] * out[i][1]);
+        spectrum[i] = sqrt(out[i][0] * out[i][0] + out[i][1] * out[i][1]) * 2.0 / N;
     }
 
     fftw_destroy_plan(p);

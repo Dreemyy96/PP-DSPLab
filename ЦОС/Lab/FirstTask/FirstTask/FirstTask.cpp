@@ -93,7 +93,7 @@ vector<int> quantizeSignal(const vector<double>& signal, double imax, int numLev
 
     double step = (2 * imax) / numLevels;
     for (size_t i = 0; i < signal.size(); ++i) {
-        int level = static_cast<int>((signal[i] + imax) / step);
+        int level = static_cast<int>(round((signal[i] + imax - step / 2.0) / step));
         if (level < 0) level = 0;
         if (level >= numLevels) level = numLevels - 1;
         digital[i] = level;

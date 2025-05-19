@@ -47,7 +47,7 @@ vector<double> dequantizeSignal(const vector<int>& digital, double imax, int num
     return dequantize;
 }
 
-void computeFFT(const vector<double>& signal, vector<double>& spectrum) {
+void computeFFT(const vector<double>& signal, vector<complex<double>>& spectrum) {
     int N = signal.size();
     fftw_complex* in = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * N);
     fftw_complex* out = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * N);
@@ -62,7 +62,7 @@ void computeFFT(const vector<double>& signal, vector<double>& spectrum) {
 
     spectrum.resize(N);
     for (int i = 0; i < N; ++i) {
-        spectrum[i] = sqrt(out[i][0] * out[i][0] + out[i][1] * out[i][1]) * 2.0 / N;
+        spectrum[i] = complex<double>(out[i][0], out[i][1]);
     }
 
     fftw_destroy_plan(p);
@@ -70,18 +70,45 @@ void computeFFT(const vector<double>& signal, vector<double>& spectrum) {
     fftw_free(out);
 }
 
-double computeError(const vector<double>& analogSpectrum, const vector<double>& quantizedSpectrum) {
-    double sumError = 0.0;
-    const double epsilon = 1e-10;
-    size_t count = analogSpectrum.size();
+vector<double> inverseFFT(const vector<complex<double>>& spectrum) {
+    int N = spectrum.size();
+    fftw_complex* in = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * N);
+    fftw_complex* out = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * N);
 
-    for (size_t k = 0; k < count; ++k) {
-        double errorPercent = fabs(analogSpectrum[k] - quantizedSpectrum[k]) /
-            (fabs(analogSpectrum[k]) + epsilon) * 100.0;
-        sumError += errorPercent;
+    for (int i = 0; i < N; ++i) {
+        in[i][0] = spectrum[i].real();
+        in[i][1] = spectrum[i].imag();
     }
 
-    return sumError / count;
+    fftw_plan p = fftw_plan_dft_1d(N, in, out, FFTW_BACKWARD, FFTW_ESTIMATE);
+    fftw_execute(p);
+
+    vector<double> restored(N);
+    for (int i = 0; i < N; ++i) {
+        restored[i] = out[i][0] / N;
+    }
+
+    fftw_destroy_plan(p);
+    fftw_free(in);
+    fftw_free(out);
+
+    return restored;
+}
+
+double computeTimeDomainError(const vector<double>& original, const vector<double>& restored) {
+    if (original.size() != restored.size() || original.empty()) return -1.0;
+
+    double errorSum = 0.0;
+    int count = 0;
+
+    for (size_t i = 0; i < original.size(); ++i) {
+        if (fabs(original[i]) > 1e-9) {
+            errorSum += fabs((restored[i] - original[i]) / original[i]);
+            ++count;
+        }
+    }
+
+    return (count > 0) ? (errorSum / count) * 100.0 : -1.0;
 }
 
 double computeIMax(const vector<double>& analogSpectrum) {
@@ -97,7 +124,7 @@ double computeIMax(const vector<double>& analogSpectrum) {
 
 void saveSpectrumToCSV(const string& filename, const vector<double>& analogSpec, const vector<double>& digitalSpec) {
     ofstream out(filename);
-    out << "index,analog,digital\n";
+    out << "index,analog,restored\n";
     int N = min(analogSpec.size(), digitalSpec.size());
     for (int i = 0; i < N; ++i) {
         out << i << "," << analogSpec[i] << "," << digitalSpec[i] << "\n";
@@ -112,18 +139,20 @@ int main() {
 
     vector<double> analog;
     vector<int> quantizeSignal;
-    for (const auto& point : data) analog.push_back(point.analog);
-    for (const auto& point : data) quantizeSignal.push_back(point.digital);
+    for (const auto& point : data) {
+        analog.push_back(point.analog);
+        quantizeSignal.push_back(point.digital);
+    }
 
     double imax = computeIMax(analog);
 
-    vector<double> restored = dequantizeSignal(quantizeSignal, imax, numLevels);
+    vector<double> restoredSignal = dequantizeSignal(quantizeSignal, imax, numLevels);
 
-    vector<double> analogSpectrum, restoredSpectrum;
-    computeFFT(analog, analogSpectrum);
-    computeFFT(restored, restoredSpectrum);
+    vector<complex<double>> spectrum;
+    computeFFT(restoredSignal, spectrum);
+    vector<double> reconstructed = inverseFFT(spectrum);
 
-    double errorPercent = computeError(analogSpectrum, restoredSpectrum);
+    double errorPercent = computeTimeDomainError(analog, reconstructed);
 
     cout << fixed << setprecision(2);
     cout << "Погрешность между спектрами: " << errorPercent << "%" << endl;
@@ -135,7 +164,7 @@ int main() {
         cout << "Погрешность в допустимых пределах." << endl;
     }
 
-    saveSpectrumToCSV("fft_results.csv", analogSpectrum, restoredSpectrum);
+    saveSpectrumToCSV("fft_results.csv", analog, reconstructed);
 
     return 0;
 }
